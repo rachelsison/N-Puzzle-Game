@@ -13,7 +13,7 @@ const Layout = React.createClass({
       <div className="app-container">
         <header>
         </header>
-        <div className="app-content"><Board boardArray={boardArray}/></div>
+        <div className="app-content"><Board boardGrid={boardArray}/></div>
         <footer>
         </footer>
       </div>

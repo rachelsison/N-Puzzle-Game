@@ -1,59 +1,317 @@
 /*! CSS reset from benfrain/app-reset */
+@import url('https://fonts.googleapis.com/css?family=Merriweather+Sans');
 
 
+/* Board Styles */
+
+.gameTitle {
+  font-family:'Merriweather Sans', sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+}
 .boardContainer {
   display: inline-block;
-  width: 420px;
-  height: 420px;
   padding: 0;
-  margin: 0;
-  border: 2px solid black;
+  margin: 0 auto;
+  /*border: 3px solid #5d5c5c;*/
   box-sizing: border-box;
-  background-color: #bdbdbd;
+  background-color: #5d5c5c;
+  border-radius: 2px;
+}
+.notSideBar {
+  position: absolute;
+  /*margin-left: 40%;*/
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  margin-left: 80px;
+}
+.notSideBar:after {
+  background: url("https://cdn.pixabay.com/photo/2015/03/29/00/14/puzzle-696725_1280.jpg");
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0.2;
+  z-index: -100;
+  content: ' ';
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+.youWonMessage {
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 30px;
+}
+.alignDiv {
+  display: inline-block;
+ /* padding:0;
+  margin:0 auto;
+  box-sizing: border-box;*/
+}
+.buttonContainer {
+  position: relative;
+  height: 30px;
+  display: table;
+  width: 100%;
+}
+.containerWrapper {
+  margin: 0 auto;
+  text-align: center;
+}
+.cell {
+  display: table-cell;
 }
 
+
+/* Board Side Bar */
+
+.numberMovesContainer {
+  text-align: center;
+  margin: 11px;
+  border: 2px solid white;
+  font-family: 'Merriweather Sans', sans-serif;
+  color: white;
+}
+.numberMovesDescription {
+  display: inline-block;
+  text-align: center;
+  padding: 0px;
+  color: white;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 13px; 
+}
+.numberMoves {
+  font-size: 60px;
+  padding: 26px;
+}
+.sideBar {
+  height: 100%;
+  width:150px;
+  background-color: #5d5c5c;
+  position: absolute;
+  text-align: center;
+  border-right: 3px solid white;
+}
+
+
+/* Tile Styles */
 .tileBorder {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   display: inline-block;
   float: left;
   text-align: center;
-  line-height: 100px;
+  line-height: 80px;
   margin: 2px;
   font-size: 50px;
   background: #e9e9e9;
-  transition: all 2s ease-in-out;
+  transition: transform 0.2s;
+  border-radius: 2px;
+  cursor: pointer;
+  user-select: none;
 }
-
 .tileBorder :hover:not(:empty) {
-      cursor: pointer;
-      transition: transform 0.2s, background 0.2s;
-      background: #FFF0F2;
-  }
-
-.emptyTile {
-  width: 100px;
-  height: 100px;
+  cursor: pointer;
+  background: rgba(127,255,212, 0.5);
+}
+#hintTile {
+  background-color: rgba(127,255,212,0);
+  -webkit-animation: fadeInOut 2s;
+  animation: fadeInOut 2s;
+}
+.colorWin {
+  animation: colorWin 2s infinite;
+  width: 80px;
+  height: 80px;
+  display: inline-block;
   float: left;
   text-align: center;
-  line-height: 100px;
+  line-height: 80px;
   margin: 2px;
   font-size: 50px;
-  background: #bdbdbd;
+  border-radius: 2px;   
 }
 
+
+/* Tile Color Animations */
+
+@-webkit-keyframes fadeInOut {
+  0%, 100% {
+    /*outline: 4px solid rgba(200,238,59,0);*/
+    background-color: rgba(127,255,212,0);
+  }
+  50% {
+    /*outline: 4px solid rgba(200,238,59, 1);*/
+    background-color: rgba(127,255,212,1);
+  }    
+}
+
+@keyframes fadeInOut {
+  0%, 100%{
+    /*outline: 4px solid rgba(200,238,59,0);*/
+    background-color: rgba(127,255,212,0);
+  }
+  50% {
+    /*outline: 4px solid rgba(200,238,59,1);*/
+    background-color: rgba(127,255,212,1);
+  }
+}
+
+@keyframes colorWin {
+    0% {
+        background:rgba(243, 106, 104, 1);
+    }
+    25% {
+        background:rgba(85, 166, 241, 1);
+    }
+    75% {
+        background:rgba(118, 244, 194, 1);
+    }
+    100% {
+        background: rgba(239, 124, 57, 1);
+    }
+}
+
+
+/* 24 Game State Tile Styles */
+
+.tileBorder24 {
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  float: left;
+  text-align: center;
+  line-height: 60px;
+  margin: 1px;
+  font-size: 50px;
+  background: #e9e9e9;
+  transition: transform 0.2s;
+  border-radius: 2px;
+  cursor: pointer;
+  user-select: none;
+}
+.tileBorder24 :hover:not(:empty) {
+  cursor: pointer;
+  background: rgba(127,255,212, 0.5);
+}
+.colorWin24 {
+  animation: colorWin 2s infinite;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  float: left;
+  text-align: center;
+  line-height: 60px;
+  margin: 1px;
+  font-size: 50px;
+  border-radius: 2px;   
+}
+.emptyTile24 {
+  width: 60px;
+  height: 60px;
+  float: left;
+  text-align: center;
+  line-height: 60px;
+  margin: 1px;
+  font-size: 50px;
+  background-color: #5d5c5c;
+}
+.emptyTile {
+  width: 80px;
+  height: 80px;
+  float: left;
+  text-align: center;
+  line-height: 80px;
+  margin: 2px;
+  font-size: 50px;
+  background-color: #5d5c5c;
+}
+
+/* Tile Hack Movement */ 
 .move-down {
-  transform: translateY(104px);
+  transform: translateY(87px);
 }
-
 .move-up {
-  transform: translateY(-104px);
+  transform: translateY(-87px);
 }
-
 .move-left {
-  transform: translateX(-104px);
+  transform: translateX(-87px);
+}
+.move-right {
+  transform: translateX(87px);
 }
 
-.move-right {
-  transform: translateX(104px);
+
+/* 24 Game State Tile Hack Movement */ 
+
+.move-down24 {
+  transform: translateY(65.5px);
+}
+.move-up24 {
+  transform: translateY(-65.5px);
+}
+.move-left24 {
+  transform: translateX(-65.5px);
+}
+.move-right24 {
+  transform: translateX(65.5px);
+}
+
+
+/* Board Buttons and Menu Items */
+.newPuzzleMenuItem {
+  cursor: pointer;
+  user-select: none;
+  font-family: 'Merriweather Sans', sans-serif;
+  color:white;
+  width: 100%;
+  font-size: 20px;
+  margin-top: 25px;
+}
+.newPuzzleMenuItem:hover{
+  color: #7FFFD4;
+}
+.shuffleButton {
+  font-family: 'Merriweather Sans', sans-serif;
+  background-color: #5d5c5c;
+  margin-right: 4px;
+  padding: 3px;
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+  color: white;
+  border-radius: 2px;
+}
+.hintButton {
+  font-family: 'Merriweather Sans', sans-serif;
+  background-color: #5d5c5c;
+  margin-left: 4px;
+  padding: 3px;
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+  color: white;
+  border-radius: 2px;
+}
+.solveButton {
+  font-family: 'Merriweather Sans', sans-serif;
+  background-color: #5d5c5c;
+  padding: 3px;
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+  color: white;
+  border-radius: 2px;
+}
+.restartButton {
+  font-family: 'Merriweather Sans', sans-serif;
+  background-color: #5d5c5c;
+  width:100px;
+  padding: 3px;
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+  display: inline-block;
+  color: white;
+  border-radius: 2px;
 }

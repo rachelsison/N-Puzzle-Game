@@ -2,123 +2,99 @@ import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import _ from 'lodash'
 
-/* Each tile on the board should have the following attributes:
-	- goalCoordinates: coordinate on board x,y
-	- currentCoordinates: coordinate on board x,y
-	- manhattanDistance of goal vs. current
-	- tileNumber: tile number
-	- 
-*/
 const Tile = React.createClass({
 	propTypes: {
-		boardWidth: PropTypes.number.isRequired,
-		goalCoordinates: PropTypes.array.isRequired,
 		currentCoordinates: PropTypes.array.isRequired,
-		tileNumber: PropTypes.number.isRequired,
+		tileValue: PropTypes.number.isRequired,
 		triggerBoardUpdate: PropTypes.func.isRequired,
-		emptyTileCoords: PropTypes.func.isRequired
+		emptyTileCoordinates: PropTypes.func.isRequired,
+		isHintTile: PropTypes.bool.isRequired,
+		solveMove: PropTypes.bool.isRequired,
+		gameWon: PropTypes.bool.isRequired,
+		boardWidth: PropTypes.number
 	},
-	getInitialState: function() {
-    return {
-    	goalCoordinates: this.props.goalCoordinates,
-    	currentCoordinates: this.props.currentCoordinates,
-    	tileNumber: this.props.tileNumber,
-    	tileManhattanDistance: 0,
-    	tileCanMove: false
-    }
-  },
   moveTile (e) {
-  	console.log('updated moveTILE METHOD_______________')
+  	if (!e) {
+  		return
+  	}
+  	var is24game = this.props.boardWidth === 5
+  	var moveup = is24game ? "move-up24" : "move-up"
+  	var movedown = is24game ? "move-down24" : "move-down"
+  	var moveleft = is24game ? "move-left24" : "move-left"
+  	var moveright = is24game ? "move-right24" : "move-right"
   	const currentCoordinates = this.props.currentCoordinates
-  	const emptyTileCoords = this.props.emptyTileCoords
+  	const emptyTileCoordinates = this.props.emptyTileCoordinates
   	const triggerBoardUpdate = this.props.triggerBoardUpdate
-  	var el = e.target
+  	var el = typeof e.target === 'undefined' ? e : e.target 
   	if (el.classList.contains("tileInnerContainer")) {
   		el = el.parentElement
   	}
-  	//if can move
-  	//right
-  	// is emptyTile to the right of currentTile?
-  		if (currentCoordinates[1] === emptyTileCoords()[1] - 1) {
-  			console.log('in MOVERIGHT, EMPTYCOORDS: ', emptyTileCoords())
-  			el.classList.add('move-right')
+
+  	// move right
+  		if (currentCoordinates[0] === emptyTileCoordinates()[0] && currentCoordinates[1] === emptyTileCoordinates()[1] - 1) {
+  			el.classList.add(moveright)
   			setTimeout(function () {
-  				console.log('IN TIMEOUT MOVERIGHT')
-  				el.classList.remove('move-right')
-  				triggerBoardUpdate(currentCoordinates, emptyTileCoords())
+  				el.classList.remove(moveright)
+  				triggerBoardUpdate(currentCoordinates, emptyTileCoordinates())
   			}, 400)
-  			this.setState({currentCoordinates: emptyTileCoords})
+
   		}
-  	//left
-  	// is emptyTile to the left of currentTile?
-  		if (currentCoordinates[1] === emptyTileCoords()[1] + 1) {
-  			console.log('in MOVELeft, EMPTYCOORDS: ', emptyTileCoords())
-  			el.classList.add('move-left')
+  	// move left
+  		if (currentCoordinates[0] === emptyTileCoordinates()[0] && currentCoordinates[1] === emptyTileCoordinates()[1] + 1) {
+  			el.classList.add(moveleft)
   			setTimeout(function () {
-  				console.log('IN TIMEOUT MOVELEFT')
-  				el.classList.remove('move-left')
-  				triggerBoardUpdate(currentCoordinates, emptyTileCoords())
+  				el.classList.remove(moveleft)
+  				triggerBoardUpdate(currentCoordinates, emptyTileCoordinates())
   			}, 400)
-  			this.setState({currentCoordinates: emptyTileCoords})
+
   		}
-  	//up
-  	// is emptyTile above 
-  		if (currentCoordinates[0] === emptyTileCoords()[0] + 1) {
-  			console.log('in MOVEup, EMPTYCOORDS: ', emptyTileCoords())
-  			el.classList.add('move-up')
+  	// move up
+  		if (currentCoordinates[1] === emptyTileCoordinates()[1] && currentCoordinates[0] === emptyTileCoordinates()[0] + 1) {
+  			el.classList.add(moveup)
   			setTimeout(function () {
-  				console.log('IN TIMEOUT MOVEUP')
-  				el.classList.remove('move-up')
-  				triggerBoardUpdate(currentCoordinates, emptyTileCoords())
+  				el.classList.remove(moveup)
+  				triggerBoardUpdate(currentCoordinates, emptyTileCoordinates())
   			}, 400)
-  			this.setState({currentCoordinates: emptyTileCoords})
+
   		}
-  	//down
-  	// is emptyTile below?
-  	if (currentCoordinates[0] === emptyTileCoords()[0] - 1 ) {
-  		console.log('in MOVEdown, EMPTYCOORDS: ', emptyTileCoords())
-  		el.classList.add('move-down')
+  	// move down
+  	if (currentCoordinates[1] === emptyTileCoordinates()[1] && currentCoordinates[0] === emptyTileCoordinates()[0] - 1 ) {
+  		el.classList.add(movedown)
   		setTimeout(function () {
-  			console.log('IN TIMEOUT MOVEDOWN')
-  				el.classList.remove('move-down')
-  				triggerBoardUpdate(currentCoordinates, emptyTileCoords())
-  			}, 400)
-  		this.setState({currentCoordinates: emptyTileCoords})
+				el.classList.remove(movedown)
+				triggerBoardUpdate(currentCoordinates, emptyTileCoordinates())
+			}, 400)
   	}
-  	// update current coords
-  	// reset tileCanMove to false (will be updated accordingly in boardupdat)
-  	// pass new info to triggerBoardUpdate
   },
-  // moveTile (e) {
-  // 	console.log('moveTile el: ', e.target)
-  // 	var el = e.target
-  // 	if (el.classList.contains("tileInnerContainer")) {
-  // 		el = el.parentElement
-  // 		console.log('parent element: ', el)
-  // 		el.classList.add('move-down')
-  // 		console.log('added movedown class')
-  // 	} else {
-  // 		console.log('cant find classname')
-  // 	}
-  // 	this.props.triggerBoardUpdate()
-  // 	//this.setState({tileNumber:100})
-  // },
 	render () {
-		console.log('RERENDERING TILE')
-		if (this.state.tileNumber === 0) {
-			return <div className="emptyTile"></div>
+		var is24game = this.props.boardWidth === 5
+		var colorWin = is24game ? "colorWin24" : "colorWin"
+		var basicTile = is24game ? "tileBorder24" : "tileBorder"
+		var hintTile = is24game ? "hintTile24" : "hintTile"
+		var emptyTile = is24game ? "emptyTile24" : "emptyTile"
+
+		if (this.props.tileValue === 0) {
+			return <div className={emptyTile}></div>
 		}
-		return <div onClick={this.moveTile} className="tileBorder">
-							<div className="tileInnerContainer">{this.state.tileNumber}</div>
+		if (this.props.solveMove) {
+			return <div ref={(el) => this.moveTile(el)} onClick={this.moveTile} className={basicTile}>
+							<div id="hintTile" className="tileInnerContainer">{this.props.tileValue}</div>
 						</div>
-	},
-	ComponentDidMount () {
-
-	},
-	ComonentWillUpdate () {
-
+		}
+		if (this.props.gameWon) {
+			return <div className={colorWin}>
+							<div className="tileInnerContainer">{this.props.tileValue}</div>
+						</div>
+		}
+		if (this.props.isHintTile) {
+			return <div onClick={this.moveTile} className={basicTile}>
+							<div id="hintTile" className="tileInnerContainer">{this.props.tileValue}</div>
+						</div>
+		}
+		return <div onClick={this.moveTile} className={basicTile}>
+							<div className="tileInnerContainer">{this.props.tileValue}</div>
+						</div>
 	}
-
 })
 
 export default Tile
