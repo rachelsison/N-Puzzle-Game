@@ -1,6 +1,9 @@
 # N Puzzle
 
-To get started run:
+View live demo here: https://immense-plains-36089.herokuapp.com/
+
+
+To run locally run:
 
 ```
 npm install
@@ -14,3 +17,5 @@ View the project at
 ```
 http://localhost:3000
 ```
+
+Some thoughts on this 
