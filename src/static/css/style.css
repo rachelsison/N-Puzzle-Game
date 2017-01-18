@@ -27,7 +27,7 @@
   margin-left: 80px;
 }
 .notSideBar:after {
-  background: url("https://cdn.pixabay.com/photo/2015/03/29/00/14/puzzle-696725_1280.jpg");
+  background: url("./puzzle-background.jpg");
   width: 100%;
   height: 100%;
   position: absolute;
