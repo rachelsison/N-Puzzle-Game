@@ -1,17 +1,23 @@
 {
-  "name": "N-Puzzle",
+  "name": "npuzzle",
   "version": "1.0.0",
   "description": "Simple N-Puzzle Application",
   "main": "src/server.js",
-  "repository": "git@github.com:lmammino/judo-heroes.git",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/lmammino/judo-heroes.git"
+  },
   "babel": {},
   "scripts": {
     "start": "NODE_ENV=production node_modules/.bin/babel-node --presets 'react,es2015' src/server.js",
     "start-dev": "npm run start-dev-hmr",
-    "start-dev-single-page": "node_modules/.bin/http-server src/static",
-    "start-dev-hmr": "node_modules/.bin/webpack-dev-server --progress --inline --hot",
+    "start-dev-single-page": "http-server src/static",
+    "start-dev-hmr": "webpack-dev-server --progress --inline --hot",
     "build": "NODE_ENV=production node_modules/.bin/webpack -p",
     "deploy": "gh-pages -d build"
+  },
+  "engines": {
+    "node": "6.0.0"
   },
   "author": "Luciano Mammino",
   "license": "MIT",
@@ -41,5 +47,9 @@
     "react-hot-loader": "^1.3.1",
     "webpack": "^1.14.1",
     "webpack-dev-server": "^1.14.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/lmammino/judo-heroes/issues"
+  },
+  "homepage": "https://github.com/lmammino/judo-heroes#readme"
 }
