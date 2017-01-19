@@ -17,5 +17,3 @@ View the project at
 ```
 http://localhost:3000
 ```
-
-Some thoughts on this 
